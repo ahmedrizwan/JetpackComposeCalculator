@@ -32,14 +32,7 @@ fun BottomView(
     position.setBounds(minPx, maxPx)
 
     Box(
-        modifier = Modifier.fillMaxWidth().preferredHeight(boxHeight).draggable(
-            startDragImmediately = position.isRunning,
-            dragDirection = DragDirection.Horizontal,
-            onDragStopped = { position.fling(flingConfig, it) }
-        ) { delta ->
-            position.snapTo(position.value + delta)
-            delta
-        },
+        modifier = Modifier.fillMaxWidth().preferredHeight(boxHeight),
         backgroundColor = AppState.theme.background,
         gravity = ContentGravity.BottomStart
     ) {
@@ -47,6 +40,14 @@ fun BottomView(
         val yOffset = with(DensityAmbient.current) { position.value.toDp() }
         Box(
             Modifier.offset(x = yOffset, y = 0.dp).fillMaxWidth()
+                .draggable(
+                    startDragImmediately = position.isRunning,
+                    dragDirection = DragDirection.Horizontal,
+                    onDragStopped = { position.fling(flingConfig, it) }
+                ) { delta ->
+                    position.snapTo(position.value + delta)
+                    delta
+                }
                 .preferredHeight(boxHeight),
             backgroundColor = AppState.theme.primary
         )

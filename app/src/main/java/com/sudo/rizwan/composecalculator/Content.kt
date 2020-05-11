@@ -39,15 +39,7 @@ fun Content(
     position.setBounds(minPx, maxPx)
 
     Box(
-        modifier = Modifier.fillMaxSize().draggable(
-            startDragImmediately = position.isRunning,
-            dragDirection = DragDirection.Vertical,
-            // launch fling with velocity to animate to the closes anchor
-            onDragStopped = { position.fling(flingConfig, it) }
-        ) { delta ->
-            position.snapTo(position.value + delta)
-            delta // consume all delta no matter the bounds to avoid nested dragging (as example)
-        },
+        modifier = Modifier.fillMaxSize(),
         backgroundColor = Color.Transparent,
         gravity = ContentGravity.BottomStart
     ) {
@@ -58,6 +50,14 @@ fun Content(
         val yOffset = with(DensityAmbient.current) { position.value.toDp() }
         Card(
             Modifier.offset(y = yOffset, x = 0.dp).fillMaxWidth()
+                .draggable(
+                    startDragImmediately = position.isRunning,
+                    dragDirection = DragDirection.Vertical,
+                    onDragStopped = { position.fling(flingConfig, it) }
+                ) { delta ->
+                    position.snapTo(position.value + delta)
+                    delta // consume all delta no matter the bounds to avoid nested dragging (as example)
+                }
                 .preferredHeight(boxHeight),
             elevation = 4.dp,
             shape = MaterialTheme.shapes.large
