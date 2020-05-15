@@ -1,4 +1,4 @@
-package com.sudo.rizwan.composecalculator
+package com.sudo.rizwan.composecalculator.ui
 
 import androidx.compose.Composable
 import androidx.ui.core.Constraints
@@ -24,6 +24,9 @@ fun Content(
             boxHeight = (boxHeight / 1.4f),
             boxWidth = boxWidth
         )
-        TopView(constraints = constraints, boxHeight = boxHeight)
+        TopView(
+            constraints = constraints,
+            boxHeight = boxHeight
+        )
     }
 }

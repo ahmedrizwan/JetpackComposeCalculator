@@ -1,4 +1,4 @@
-package com.sudo.rizwan.composecalculator
+package com.sudo.rizwan.composecalculator.ui
 
 import androidx.compose.Composable
 import androidx.ui.core.Modifier
@@ -12,6 +12,8 @@ import androidx.ui.material.IconButton
 import androidx.ui.res.vectorResource
 import androidx.ui.text.TextStyle
 import androidx.ui.unit.sp
+import com.sudo.rizwan.composecalculator.AppState
+import com.sudo.rizwan.composecalculator.R
 
 @Composable()
 fun OperationItem(text: String) {

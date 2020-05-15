@@ -1,4 +1,4 @@
-package com.sudo.rizwan.composecalculator
+package com.sudo.rizwan.composecalculator.ui
 
 import androidx.compose.Composable
 import androidx.ui.core.Modifier
@@ -7,6 +7,7 @@ import androidx.ui.foundation.ContentGravity
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.preferredHeight
 import androidx.ui.unit.Dp
+import com.sudo.rizwan.composecalculator.AppState
 
 @Composable()
 fun BottomView(
@@ -19,6 +20,9 @@ fun BottomView(
         gravity = ContentGravity.BottomStart
     ) {
         Numbers()
-        SideView(boxHeight = boxHeight, boxWidth = boxWidth)
+        SideView(
+            boxHeight = boxHeight,
+            boxWidth = boxWidth
+        )
     }
 }

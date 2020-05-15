@@ -1,4 +1,4 @@
-package com.sudo.rizwan.composecalculator
+package com.sudo.rizwan.composecalculator.ui
 
 import androidx.compose.Composable
 import androidx.ui.core.Modifier

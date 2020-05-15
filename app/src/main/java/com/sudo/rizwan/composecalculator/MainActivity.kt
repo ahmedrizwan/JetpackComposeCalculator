@@ -6,6 +6,7 @@ import androidx.ui.core.DensityAmbient
 import androidx.ui.core.WithConstraints
 import androidx.ui.core.setContent
 import androidx.ui.material.MaterialTheme
+import com.sudo.rizwan.composecalculator.ui.Content
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

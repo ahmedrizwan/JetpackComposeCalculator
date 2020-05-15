@@ -1,10 +1,10 @@
-package com.sudo.rizwan.composecalculator
+package com.sudo.rizwan.composecalculator.ui
 
 import androidx.compose.Composable
 import androidx.ui.animation.animatedFloat
+import androidx.ui.core.Constraints
 import androidx.ui.core.DensityAmbient
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.Box
 import androidx.ui.foundation.animation.AnchorsFlingConfig
 import androidx.ui.foundation.animation.fling
 import androidx.ui.foundation.gestures.DragDirection
@@ -12,35 +12,41 @@ import androidx.ui.foundation.gestures.draggable
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.offset
 import androidx.ui.layout.preferredHeight
+import androidx.ui.material.Card
+import androidx.ui.material.MaterialTheme
 import androidx.ui.unit.Dp
 import androidx.ui.unit.dp
 
 @Composable()
-fun SideView(
-    boxHeight: Dp,
-    boxWidth: Dp
+fun TopView(
+    constraints: Constraints,
+    boxHeight: Dp
 ) {
-    val min = 30.dp
-    val max = boxWidth - 30.dp
+    val start = -(constraints.maxHeight.value / 1.4f)
+    val max = 0.dp
+    val min = -(boxHeight / 1.4f)
     val (minPx, maxPx) = with(DensityAmbient.current) {
         min.toPx().value to max.toPx().value
     }
-    val anchors = listOf(minPx, maxPx)
+    val anchors = listOf(minPx, maxPx) // final position anchors
     val flingConfig = AnchorsFlingConfig(anchors)
-    val position = animatedFloat(maxPx)
+    val position = animatedFloat(start) // for dragging state
     position.setBounds(minPx, maxPx)
+
     val yOffset = with(DensityAmbient.current) { position.value.toDp() }
-    Box(
-        Modifier.offset(x = yOffset, y = 0.dp).fillMaxWidth()
+
+    Card(
+        Modifier.offset(y = yOffset, x = 0.dp).fillMaxWidth()
             .draggable(
                 startDragImmediately = position.isRunning,
-                dragDirection = DragDirection.Horizontal,
+                dragDirection = DragDirection.Vertical,
                 onDragStopped = { position.fling(flingConfig, it) }
             ) { delta ->
                 position.snapTo(position.value + delta)
-                delta
+                delta // consume all delta no matter the bounds to avoid nested dragging (as example)
             }
             .preferredHeight(boxHeight),
-        backgroundColor = AppState.theme.primary
-    )
+        elevation = 4.dp,
+        shape = MaterialTheme.shapes.large
+    ) {}
 }
