@@ -1,23 +1,21 @@
 package com.sudo.rizwan.composecalculator.ui
 
-import android.util.Log
 import androidx.compose.Composable
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.Box
 import androidx.ui.graphics.Color
 import androidx.ui.layout.*
 import androidx.ui.material.Divider
 import androidx.ui.unit.dp
 
+private val operationsColumn = listOf("Delete", "÷", "x", "-", "+")
+private val numberColumns = listOf(
+    listOf("7", "4", "1", "0"),
+    listOf("8", "5", "2", "."),
+    listOf("9", "6", "3", "=")
+)
+
 @Composable()
 fun Numbers(alpha: Int) {
-    val operationsColumn = listOf("Delete", "÷", "x", "-", "+")
-    val numberColumns = listOf(
-        listOf("7", "4", "1", "0"),
-        listOf("8", "5", "2", "."),
-        listOf("9", "6", "3", "=")
-    )
-
     Stack {
         Row(modifier = Modifier.fillMaxSize()) {
             numberColumns.forEach { numberColumn ->
@@ -38,6 +36,6 @@ fun Numbers(alpha: Int) {
             }
             Spacer(modifier = Modifier.preferredWidth(30.dp))
         }
-        Box(modifier = Modifier.fillMaxSize(), backgroundColor = Color(70, 70, 70, alpha))
+        DimOverlay(alpha = alpha)
     }
 }

@@ -4,8 +4,6 @@ import androidx.compose.Composable
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Box
 import androidx.ui.foundation.ContentGravity
-import androidx.ui.graphics.Color
-import androidx.ui.layout.fillMaxSize
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.preferredHeight
 import androidx.ui.unit.Dp
@@ -38,9 +36,6 @@ fun BottomView(
             drag = sideDrag
         )
         // Overlay's alpha that corresponds to top view drag
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            backgroundColor = Color(80, 80, 80, alphaForTopDrag)
-        )
+        DimOverlay(alpha = alphaForTopDrag)
     }
 }
