@@ -1,11 +1,8 @@
 package com.sudo.rizwan.composecalculator.ui
 
 import androidx.compose.Composable
-import androidx.ui.animation.animatedFloat
-import androidx.ui.core.Constraints
 import androidx.ui.core.DensityAmbient
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.animation.AnchorsFlingConfig
 import androidx.ui.foundation.animation.fling
 import androidx.ui.foundation.gestures.DragDirection
 import androidx.ui.foundation.gestures.draggable
@@ -16,23 +13,15 @@ import androidx.ui.material.Card
 import androidx.ui.material.MaterialTheme
 import androidx.ui.unit.Dp
 import androidx.ui.unit.dp
+import com.sudo.rizwan.composecalculator.Drag
 
 @Composable()
 fun TopView(
-    constraints: Constraints,
-    boxHeight: Dp
+    boxHeight: Dp,
+    drag: Drag
 ) {
-    val start = -(constraints.maxHeight.value / 1.4f)
-    val max = 0.dp
-    val min = -(boxHeight / 1.4f)
-    val (minPx, maxPx) = with(DensityAmbient.current) {
-        min.toPx().value to max.toPx().value
-    }
-    val anchors = listOf(minPx, maxPx) // final position anchors
-    val flingConfig = AnchorsFlingConfig(anchors)
-    val position = animatedFloat(start) // for dragging state
-    position.setBounds(minPx, maxPx)
-
+    val position = drag.position
+    val flingConfig = drag.flingConfig
     val yOffset = with(DensityAmbient.current) { position.value.toDp() }
 
     Card(

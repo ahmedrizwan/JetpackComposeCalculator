@@ -4,25 +4,43 @@ import androidx.compose.Composable
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Box
 import androidx.ui.foundation.ContentGravity
+import androidx.ui.graphics.Color
+import androidx.ui.layout.fillMaxSize
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.preferredHeight
 import androidx.ui.unit.Dp
 import com.sudo.rizwan.composecalculator.AppState
+import com.sudo.rizwan.composecalculator.Drag
 
 @Composable()
 fun BottomView(
     boxHeight: Dp,
-    boxWidth: Dp
+    sideDrag: Drag,
+    topDrag: Drag
 ) {
+    // Some maths to calculate alphas corresponding to the drag
+    val sidePosition = sideDrag.position
+    val sideDivisor = sidePosition.max / 255
+    val alphaForSideDrag = (255 - sidePosition.value / sideDivisor).toInt()
+
+    val topPosition = topDrag.position
+    val topDivisor = topPosition.min / 255
+    val alphaForTopDrag = (255 - topPosition.value / topDivisor).toInt()
+
     Box(
         modifier = Modifier.fillMaxWidth().preferredHeight(boxHeight),
         backgroundColor = AppState.theme.background,
         gravity = ContentGravity.BottomStart
     ) {
-        Numbers()
+        Numbers(alpha = alphaForSideDrag)
         SideView(
             boxHeight = boxHeight,
-            boxWidth = boxWidth
+            drag = sideDrag
+        )
+        // Overlay's alpha that corresponds to top view drag
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            backgroundColor = Color(80, 80, 80, alphaForTopDrag)
         )
     }
 }
