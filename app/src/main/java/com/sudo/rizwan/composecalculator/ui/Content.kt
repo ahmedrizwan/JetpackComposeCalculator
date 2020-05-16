@@ -26,8 +26,7 @@ fun Content(
     val (sideMinPx, sideMaxPx) = with(DensityAmbient.current) {
         sideMin.toPx().value to sideMax.toPx().value
     }
-    val sideAnchors = listOf(sideMinPx, sideMaxPx)
-    val sideFlingConfig = AnchorsFlingConfig(sideAnchors)
+    val sideFlingConfig = AnchorsFlingConfig(listOf(sideMinPx, sideMaxPx))
     val sidePosition = animatedFloat(sideMaxPx)
     sidePosition.setBounds(sideMinPx, sideMaxPx)
 
@@ -43,8 +42,7 @@ fun Content(
     val (topMinPx, topMaxPx) = with(DensityAmbient.current) {
         topMin.toPx().value to topMax.toPx().value
     }
-    val anchors = listOf(topMinPx, topMaxPx) // final position anchors
-    val topFlingConfig = AnchorsFlingConfig(anchors)
+    val topFlingConfig = AnchorsFlingConfig(listOf(topMinPx, topMaxPx))
     val topPosition = animatedFloat(topStart) // for dragging state
     topPosition.setBounds(topMinPx, topMaxPx)
 

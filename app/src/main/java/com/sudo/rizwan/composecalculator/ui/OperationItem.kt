@@ -31,7 +31,10 @@ fun OperationItem(text: String) {
             Box(gravity = ContentGravity.Center) {
                 Text(
                     text = text,
-                    style = TextStyle(color = AppState.theme.primary, fontSize = 24.sp)
+                    style = TextStyle(
+                        color = AppState.theme.primary,
+                        fontSize = 22.sp
+                    )
                 )
             }
         }
