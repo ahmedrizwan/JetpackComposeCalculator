@@ -13,7 +13,7 @@ import androidx.ui.text.TextStyle
 import androidx.ui.text.font.font
 import androidx.ui.text.font.fontFamily
 import androidx.ui.unit.sp
-import com.github.keelar.exprk.Expressions
+import com.sudo.rizwan.composecalculator.exprk.Expressions
 import com.sudo.rizwan.composecalculator.AppState.inputText
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R

@@ -1,7 +1,11 @@
-package com.github.keelar.exprk
+package com.sudo.rizwan.composecalculator.exprk
 
-import com.github.keelar.exprk.internal.*
-import com.github.keelar.exprk.internal.Function
+import com.sudo.rizwan.composecalculator.exprk.internal.Evaluator
+import com.sudo.rizwan.composecalculator.exprk.internal.Expr
+import com.sudo.rizwan.composecalculator.exprk.internal.Function
+import com.sudo.rizwan.composecalculator.exprk.internal.Parser
+import com.sudo.rizwan.composecalculator.exprk.internal.Scanner
+import com.sudo.rizwan.composecalculator.exprk.internal.Token
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode

@@ -1,7 +1,7 @@
-package com.github.keelar.exprk.internal
+package com.sudo.rizwan.composecalculator.exprk.internal
 
-import com.github.keelar.exprk.ExpressionException
-import com.github.keelar.exprk.internal.TokenType.*
+import com.sudo.rizwan.composecalculator.exprk.ExpressionException
+import com.sudo.rizwan.composecalculator.exprk.internal.TokenType.*
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode

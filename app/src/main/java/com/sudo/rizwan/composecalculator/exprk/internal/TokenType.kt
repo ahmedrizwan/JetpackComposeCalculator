@@ -1,4 +1,4 @@
-package com.github.keelar.exprk.internal
+package com.sudo.rizwan.composecalculator.exprk.internal
 
 internal enum class TokenType {
 
