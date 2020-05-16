@@ -23,10 +23,15 @@ fun TextItem(text: String) {
     IconButton(modifier = Modifier.weight(1f).fillMaxWidth(), onClick = {
         if (text == "=") {
             // calculate dummy result
-            outputText = TextFieldValue(text = "21")
+            outputText = TextFieldValue(text = Expressions().eval(inputText.text).toString())
         } else {
             inputText = TextFieldValue(text = inputText.text + text)
-            outputText = TextFieldValue(text = Expressions().eval(inputText.text).toString())
+
+            if (inputText.text.contains("+") || inputText.text.contains("-")) {
+                outputText = TextFieldValue(text = Expressions().eval(inputText.text).toString())
+            } else {
+                outputText = TextFieldValue(text = "")
+            }
         }
     }) {
         Box(gravity = ContentGravity.Center) {

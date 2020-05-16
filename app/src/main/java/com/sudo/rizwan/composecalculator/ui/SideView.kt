@@ -1,6 +1,7 @@
 package com.sudo.rizwan.composecalculator.ui
 
 import androidx.compose.Composable
+import androidx.compose.state
 import androidx.ui.core.DensityAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Box
@@ -32,6 +33,7 @@ fun SideView(
     val position = drag.position
     val flingConfig = drag.flingConfig
     val yOffset = with(DensityAmbient.current) { position.value.toDp() }
+    val toggleAsset = state { R.drawable.ic_keyboard_arrow_left_24 }
     Box(
         Modifier.offset(x = yOffset, y = 0.dp)
             .fillMaxWidth()
@@ -48,21 +50,33 @@ fun SideView(
         gravity = ContentGravity.CenterStart
     ) {
         Box(modifier = Modifier.preferredWidth(30.dp), gravity = ContentGravity.Center) {
-            if (position.value == position.max) {
-                IconButton(onClick = {
+            toggleAsset.value = when (position.value) {
+                position.max -> {
+                    R.drawable.ic_keyboard_arrow_left_24
+                }
+                position.min -> {
+                    R.drawable.ic_keyboard_arrow_right_24
+                }
+                else -> {
+                    toggleAsset.value
+                }
+            }
+
+            IconButton(onClick = {
+                if (toggleAsset.value == R.drawable.ic_keyboard_arrow_left_24) {
                     position.animateTo(position.min)
-                }) {
+                } else {
+                    position.animateTo(position.max)
+                }
+            }) {
+                if (toggleAsset.value == R.drawable.ic_keyboard_arrow_left_24) {
                     Icon(
-                        asset = vectorResource(id = R.drawable.ic_keyboard_arrow_left_24),
+                        asset = vectorResource(id = toggleAsset.value),
                         tint = Color.White
                     )
-                }
-            } else {
-                IconButton(onClick = {
-                    position.animateTo(position.max)
-                }) {
+                } else {
                     Icon(
-                        asset = vectorResource(id = R.drawable.ic_keyboard_arrow_right_24),
+                        asset = vectorResource(id = toggleAsset.value),
                         tint = Color.White
                     )
                 }
