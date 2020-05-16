@@ -4,14 +4,12 @@ import androidx.compose.Composable
 import androidx.ui.core.Alignment
 import androidx.ui.core.DensityAmbient
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.ContentGravity
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
+import androidx.ui.foundation.*
 import androidx.ui.foundation.animation.fling
 import androidx.ui.foundation.gestures.DragDirection
 import androidx.ui.foundation.gestures.draggable
 import androidx.ui.graphics.Color
+import androidx.ui.input.KeyboardType
 import androidx.ui.layout.*
 import androidx.ui.material.Button
 import androidx.ui.material.Card
@@ -25,6 +23,8 @@ import androidx.ui.text.font.fontFamily
 import androidx.ui.unit.Dp
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
+import com.sudo.rizwan.composecalculator.AppState.inputText
+import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.Drag
 import com.sudo.rizwan.composecalculator.R
 
@@ -37,6 +37,11 @@ fun TopView(
     val flingConfig = drag.flingConfig
     val yOffset = with(DensityAmbient.current) { position.value.toDp() }
 
+    val fontFamily = fontFamily(
+        listOf(
+            font(resId = R.font.jost_regular)
+        )
+    )
     Card(
         Modifier.offset(y = yOffset, x = 0.dp).fillMaxWidth()
             .draggable(
@@ -61,31 +66,58 @@ fun TopView(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalGravity = Alignment.CenterHorizontally
             ) {
-                // Top Bar
-                Row(
-                    modifier = Modifier.fillMaxWidth().preferredHeight(56.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalGravity = ContentGravity.CenterVertically
-                ) {
-                    Button(onClick = {}, backgroundColor = Color.Transparent, elevation = 0.dp) {
-                        Text(
-                            text = "DEG", style = TextStyle(
-                                color = Color(0xFF636363),
-                                fontFamily = fontFamily(
-                                    listOf(
-                                        font(resId = R.font.jost_regular)
-                                    )
-                                ),
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 16.sp
+                Column {
+                    // Top Bar
+                    Row(
+                        modifier = Modifier.fillMaxWidth().preferredHeight(56.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalGravity = ContentGravity.CenterVertically
+                    ) {
+                        Button(
+                            onClick = {},
+                            backgroundColor = Color.Transparent,
+                            elevation = 0.dp
+                        ) {
+                            Text(
+                                text = "DEG", style = TextStyle(
+                                    color = Color(0xFF636363),
+                                    fontFamily = fontFamily,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 16.sp
+                                )
                             )
-                        )
+                        }
+                        IconButton(onClick = {}) {
+                            Icon(
+                                asset = vectorResource(id = R.drawable.ic_more_vert_24),
+                                tint = Color(0xFF636363)
+                            )
+                        }
                     }
-                    IconButton(onClick = {}) {
-                        Icon(
-                            asset = vectorResource(id = R.drawable.ic_more_vert_24),
-                            tint = Color(0xFF636363)
-                        )
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        gravity = ContentGravity.TopEnd
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                            horizontalGravity = Alignment.End
+                        ) {
+                            TextField(
+                                value = inputText,
+                                modifier = Modifier.preferredHeight(56.dp),
+                                onValueChange = { textFieldValue -> inputText = textFieldValue },
+                                keyboardType = KeyboardType.Number,
+                                textStyle = TextStyle(fontSize = 46.sp, fontFamily = fontFamily)
+                            )
+                            Text(
+                                text = outputText.text,
+                                style = TextStyle(
+                                    color = Color(0xFF636363),
+                                    fontSize = 36.sp,
+                                    fontFamily = fontFamily
+                                )
+                            )
+                        }
                     }
                 }
 
