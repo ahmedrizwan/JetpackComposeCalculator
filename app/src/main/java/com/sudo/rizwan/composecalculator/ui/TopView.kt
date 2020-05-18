@@ -19,6 +19,7 @@ import androidx.ui.material.icons.filled.ArrowBack
 import androidx.ui.res.vectorResource
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontWeight
+import androidx.ui.text.style.TextOverflow
 import androidx.ui.unit.Dp
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
@@ -26,9 +27,8 @@ import com.sudo.rizwan.composecalculator.*
 import com.sudo.rizwan.composecalculator.AppState.inputText
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R
+import com.sudo.rizwan.composecalculator.model.Operation
 import kotlin.math.abs
-
-private val grayColor = Color(0xFF636363)
 
 @Composable
 fun TopView(
@@ -203,7 +203,11 @@ private fun TextFields() {
     ) {
         TextField(
             value = inputText,
-            onValueChange = { textFieldValue -> inputText = textFieldValue },
+            onValueChange = { textFieldValue ->
+                if (textFieldValue.text.length < 10) {
+                    inputText = textFieldValue
+                }
+            },
             keyboardType = KeyboardType.Number,
             textStyle = TextStyle(fontSize = 46.sp, fontFamily = jostFontFamily)
         )
@@ -213,7 +217,10 @@ private fun TextFields() {
                 color = grayColor,
                 fontSize = 36.sp,
                 fontFamily = jostFontFamily
-            )
+            ),
+            overflow = TextOverflow.Ellipsis,
+            softWrap = false,
+            maxLines = 1
         )
     }
 }

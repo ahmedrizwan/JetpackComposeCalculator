@@ -2,10 +2,9 @@ package com.sudo.rizwan.composecalculator
 
 import androidx.compose.Model
 import androidx.ui.foundation.TextFieldValue
-import androidx.ui.text.font.font
-import androidx.ui.text.font.fontFamily
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.exprk.Expressions
+import com.sudo.rizwan.composecalculator.model.Operation
 import java.math.RoundingMode
 
 @Model
@@ -13,7 +12,7 @@ object AppState {
     var theme = lightThemeColors
     var inputText = TextFieldValue(text = "")
     var outputText = TextFieldValue(text = "")
-    val operationsHistory = mutableListOf<Operation>(
+    val operationsHistory = mutableListOf(
         Operation(input = "24+32", output = "56", date = "May 13, 2020"),
         Operation(input = "32+24", output = "56", date = "May 14, 2020"),
         Operation(input = "32+24-6", output = "50", date = "May 15, 2020"),
@@ -26,12 +25,6 @@ object AppState {
 fun isLightTheme(): Boolean {
     return AppState.theme.isLight
 }
-
-data class Operation(
-    val input: String,
-    val output: String,
-    val date: String
-)
 
 fun performCalculation() {
     val finalExpression = AppState.inputText.text.replace('x', '*').replace('÷', '/')
@@ -51,9 +44,3 @@ fun performCalculation() {
         TextFieldValue(text = eval.toString())
     }
 }
-
-val jostFontFamily = fontFamily(
-    listOf(
-        font(resId = R.font.jost_regular)
-    )
-)

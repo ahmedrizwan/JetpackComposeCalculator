@@ -25,7 +25,9 @@ fun TextItem(text: String) {
         if (text == "=") {
             performCalculation()
         } else {
-            inputText = TextFieldValue(text = inputText.text + text)
+            if (inputText.text.length < 10) {
+                inputText = TextFieldValue(text = inputText.text + text)
+            }
 
             performCalculation()
         }
