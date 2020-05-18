@@ -25,7 +25,6 @@ import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.sudo.rizwan.composecalculator.*
 import com.sudo.rizwan.composecalculator.AppState.inputText
-import com.sudo.rizwan.composecalculator.AppState.operationsHistory
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R
 import com.sudo.rizwan.composecalculator.model.Operation
@@ -40,6 +39,10 @@ fun TopView(
     val flingConfig = drag.flingConfig
     val yOffset = with(DensityAmbient.current) { position.value.toDp() }
     val scrollerPosition = ScrollerPosition()
+    // scroll the history list to bottom when dragging the top panel
+    // 90dp history item height is an approximation
+    scrollerPosition.smoothScrollBy(operationsHistory.size * 90.dp.value)
+
     Card(
         Modifier.offset(y = yOffset, x = 0.dp).fillMaxWidth()
             .draggable(
@@ -48,9 +51,6 @@ fun TopView(
                 onDragStopped = { position.fling(flingConfig, it) }
             ) { delta ->
                 position.snapTo(position.value + delta)
-                // scroll the history list to bottom when dragging the top panel
-                // 90dp history item height is an approximation
-                scrollerPosition.smoothScrollBy(operationsHistory.size * 90.dp.value)
                 // consume all delta no matter the bounds to avoid nested dragging (as example)
                 delta
             }
@@ -171,16 +171,13 @@ private fun CollapsedContent(boxHeight: Dp, position: AnimatedFloat) {
     val shouldDisplay = position.min - position.value == 0f
     Column(
         modifier = Modifier.preferredHeight(height.dp)
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalGravity = Alignment.CenterHorizontally
+            .fillMaxWidth()
     ) {
         if (shouldDisplay) {
             Column {
                 CollapsedTopBar()
                 TextFields()
             }
-
             // No space between top bar & text fields
         }
     }
