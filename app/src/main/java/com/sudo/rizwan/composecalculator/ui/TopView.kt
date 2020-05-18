@@ -25,6 +25,7 @@ import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.sudo.rizwan.composecalculator.*
 import com.sudo.rizwan.composecalculator.AppState.inputText
+import com.sudo.rizwan.composecalculator.AppState.operationsHistory
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R
 import com.sudo.rizwan.composecalculator.model.Operation
@@ -38,7 +39,7 @@ fun TopView(
     val position = drag.position
     val flingConfig = drag.flingConfig
     val yOffset = with(DensityAmbient.current) { position.value.toDp() }
-
+    val scrollerPosition = ScrollerPosition()
     Card(
         Modifier.offset(y = yOffset, x = 0.dp).fillMaxWidth()
             .draggable(
@@ -47,7 +48,11 @@ fun TopView(
                 onDragStopped = { position.fling(flingConfig, it) }
             ) { delta ->
                 position.snapTo(position.value + delta)
-                delta // consume all delta no matter the bounds to avoid nested dragging (as example)
+                // scroll the history list to bottom when dragging the top panel
+                // 90dp history item height is an approximation
+                scrollerPosition.smoothScrollBy(operationsHistory.size * 90.dp.value)
+                // consume all delta no matter the bounds to avoid nested dragging (as example)
+                delta
             }
             .preferredHeight(boxHeight),
         elevation = 4.dp,
@@ -60,7 +65,7 @@ fun TopView(
             horizontalGravity = ContentGravity.CenterHorizontally
         ) {
             ExpandedTopBar()
-            History()
+            History(scrollerPosition)
             Spacer(modifier = Modifier.preferredHeight(2.dp))
             CollapsedContent(boxHeight, position)
             RoundedDash()
@@ -107,10 +112,7 @@ private fun ExpandedTopBar() {
 }
 
 @Composable
-private fun History() {
-    val scrollerPosition = ScrollerPosition()
-    scrollerPosition.smoothScrollBy(300f)
-    val operationsHistory = AppState.operationsHistory
+private fun History(scrollerPosition: ScrollerPosition) {
     VerticalScroller(scrollerPosition = scrollerPosition, modifier = Modifier.weight(1f)) {
         Column {
             operationsHistory.forEachIndexed { index, item ->

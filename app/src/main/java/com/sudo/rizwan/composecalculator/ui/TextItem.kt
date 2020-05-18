@@ -18,12 +18,14 @@ import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R
 import com.sudo.rizwan.composecalculator.exprk.Expressions
 import com.sudo.rizwan.composecalculator.performCalculation
+import com.sudo.rizwan.composecalculator.saveCalculationToHistory
 
 @Composable()
 fun TextItem(text: String) {
     IconButton(modifier = Modifier.weight(1f).fillMaxWidth(), onClick = {
         if (text == "=") {
             performCalculation()
+            saveCalculationToHistory()
         } else {
             if (inputText.text.length < 10) {
                 inputText = TextFieldValue(text = inputText.text + text)
