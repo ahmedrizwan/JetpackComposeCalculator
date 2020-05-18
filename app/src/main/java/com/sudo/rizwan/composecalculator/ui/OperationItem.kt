@@ -13,6 +13,7 @@ import com.sudo.rizwan.composecalculator.AppState
 import com.sudo.rizwan.composecalculator.AppState.inputText
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R
+import com.sudo.rizwan.composecalculator.performCalculation
 
 @Composable()
 fun OperationItem(text: String) {
@@ -23,6 +24,7 @@ fun OperationItem(text: String) {
                 inputText = TextFieldValue(
                     text = inputText.text.substring(0, inputText.text.length - 1)
                 )
+                performCalculation()
             }) {
             Icon(
                 asset = vectorResource(id = R.drawable.ic_outline_backspace_24),

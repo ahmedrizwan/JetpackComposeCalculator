@@ -4,6 +4,9 @@ import androidx.compose.Model
 import androidx.ui.foundation.TextFieldValue
 import androidx.ui.text.font.font
 import androidx.ui.text.font.fontFamily
+import com.sudo.rizwan.composecalculator.AppState.outputText
+import com.sudo.rizwan.composecalculator.exprk.Expressions
+import java.math.RoundingMode
 
 @Model
 object AppState {
@@ -18,6 +21,8 @@ object AppState {
     )
 }
 
+// Utils
+
 fun isLightTheme(): Boolean {
     return AppState.theme.isLight
 }
@@ -27,6 +32,25 @@ data class Operation(
     val output: String,
     val date: String
 )
+
+fun performCalculation() {
+    val finalExpression = AppState.inputText.text.replace('x', '*').replace('÷', '/')
+    val expressions = arrayOf('+', '-', '*', '/')
+    if (!expressions.any { finalExpression.contains(it) }) {
+        return
+    }
+    if (expressions.any { finalExpression.endsWith(it) }) {
+        outputText = TextFieldValue(text = "")
+        return
+    }
+    val eval = Expressions().eval(finalExpression)
+    outputText = if (eval.toString().contains(".")) {
+        val rounded = eval.setScale(1, RoundingMode.UP)
+        TextFieldValue(text = rounded.toString())
+    } else {
+        TextFieldValue(text = eval.toString())
+    }
+}
 
 val jostFontFamily = fontFamily(
     listOf(

@@ -13,25 +13,21 @@ import androidx.ui.text.TextStyle
 import androidx.ui.text.font.font
 import androidx.ui.text.font.fontFamily
 import androidx.ui.unit.sp
-import com.sudo.rizwan.composecalculator.exprk.Expressions
 import com.sudo.rizwan.composecalculator.AppState.inputText
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R
+import com.sudo.rizwan.composecalculator.exprk.Expressions
+import com.sudo.rizwan.composecalculator.performCalculation
 
 @Composable()
 fun TextItem(text: String) {
     IconButton(modifier = Modifier.weight(1f).fillMaxWidth(), onClick = {
         if (text == "=") {
-            // calculate dummy result
-            outputText = TextFieldValue(text = Expressions().eval(inputText.text).toString())
+            performCalculation()
         } else {
             inputText = TextFieldValue(text = inputText.text + text)
 
-            if (inputText.text.contains("+") || inputText.text.contains("-")) {
-                outputText = TextFieldValue(text = Expressions().eval(inputText.text).toString())
-            } else {
-                outputText = TextFieldValue(text = "")
-            }
+            performCalculation()
         }
     }) {
         Box(gravity = ContentGravity.Center) {
@@ -45,3 +41,4 @@ fun TextItem(text: String) {
         }
     }
 }
+
