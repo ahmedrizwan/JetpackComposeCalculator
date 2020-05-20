@@ -27,6 +27,7 @@ import com.sudo.rizwan.composecalculator.*
 import com.sudo.rizwan.composecalculator.AppState.inputText
 import com.sudo.rizwan.composecalculator.AppState.outputText
 import com.sudo.rizwan.composecalculator.R
+import com.sudo.rizwan.composecalculator.model.Drag
 import com.sudo.rizwan.composecalculator.model.Operation
 import kotlin.math.abs
 
@@ -64,17 +65,17 @@ fun TopView(
             verticalArrangement = Arrangement.Bottom,
             horizontalGravity = ContentGravity.CenterHorizontally
         ) {
-            ExpandedTopBar()
-            History(scrollerPosition)
+            HistoryTopBar()
+            HistoryList(scrollerPosition)
             Spacer(modifier = Modifier.preferredHeight(2.dp))
-            CollapsedContent(boxHeight, position)
+            CollapsableContent(boxHeight, position)
             RoundedDash()
         }
     }
 }
 
 @Composable
-private fun ExpandedTopBar() {
+private fun HistoryTopBar() {
     Surface(elevation = 2.dp, color = Color.White) {
         Row(
             modifier = Modifier.fillMaxWidth().preferredHeight(56.dp),
@@ -112,7 +113,7 @@ private fun ExpandedTopBar() {
 }
 
 @Composable
-private fun History(scrollerPosition: ScrollerPosition) {
+private fun HistoryList(scrollerPosition: ScrollerPosition) {
     VerticalScroller(scrollerPosition = scrollerPosition, modifier = Modifier.weight(1f)) {
         Column {
             operationsHistory.forEachIndexed { index, item ->
@@ -158,7 +159,7 @@ private fun HistoryItem(item: Operation) {
 }
 
 @Composable
-private fun CollapsedContent(boxHeight: Dp, position: AnimatedFloat) {
+private fun CollapsableContent(boxHeight: Dp, position: AnimatedFloat) {
     // Some scary maths
     val originalHeight = (boxHeight.value / 3.7)
     val div = abs(position.min / originalHeight)
@@ -174,25 +175,44 @@ private fun CollapsedContent(boxHeight: Dp, position: AnimatedFloat) {
             .fillMaxWidth()
     ) {
         if (shouldDisplay) {
+            // No space between top bar & text fields
             Column {
-                CollapsedTopBar()
+                MainTopBar()
                 TextFields()
             }
-            // No space between top bar & text fields
         }
     }
 }
 
 @Composable
-fun WhiteOverlay(alpha: Int) {
-    val finalAlpha = if (alpha > 255) {
-        255
-    } else {
-        alpha
+private fun MainTopBar() {
+    Row(
+        modifier = Modifier.fillMaxWidth().preferredHeight(56.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalGravity = ContentGravity.CenterVertically
+    ) {
+        Button(
+            onClick = {},
+            backgroundColor = Color.Transparent,
+            elevation = 0.dp
+        ) {
+            Text(
+                text = "DEG", style = TextStyle(
+                    color = Color(0xFF636363),
+                    fontFamily = jostFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp
+                )
+            )
+        }
+        IconButton(onClick = {}) {
+            Icon(
+                asset = vectorResource(id = R.drawable.ic_more_vert_24),
+                tint = Color(0xFF636363)
+            )
+        }
     }
-    Box(modifier = Modifier.fillMaxSize(), backgroundColor = Color(255, 255, 255, finalAlpha))
 }
-
 
 @Composable
 private fun TextFields() {
@@ -234,35 +254,5 @@ private fun RoundedDash() {
             asset = vectorResource(id = R.drawable.ic_rounded_dash),
             tint = Color(0xFFD3D3D3)
         )
-    }
-}
-
-@Composable
-private fun CollapsedTopBar() {
-    Row(
-        modifier = Modifier.fillMaxWidth().preferredHeight(56.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalGravity = ContentGravity.CenterVertically
-    ) {
-        Button(
-            onClick = {},
-            backgroundColor = Color.Transparent,
-            elevation = 0.dp
-        ) {
-            Text(
-                text = "DEG", style = TextStyle(
-                    color = Color(0xFF636363),
-                    fontFamily = jostFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp
-                )
-            )
-        }
-        IconButton(onClick = {}) {
-            Icon(
-                asset = vectorResource(id = R.drawable.ic_more_vert_24),
-                tint = Color(0xFF636363)
-            )
-        }
     }
 }

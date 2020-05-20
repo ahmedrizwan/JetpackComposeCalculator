@@ -22,7 +22,7 @@ import androidx.ui.unit.Dp
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.sudo.rizwan.composecalculator.AppState
-import com.sudo.rizwan.composecalculator.Drag
+import com.sudo.rizwan.composecalculator.model.Drag
 import com.sudo.rizwan.composecalculator.R
 
 @Composable()

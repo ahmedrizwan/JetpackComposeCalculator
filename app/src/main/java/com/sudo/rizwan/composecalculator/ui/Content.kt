@@ -12,7 +12,7 @@ import androidx.ui.graphics.Color
 import androidx.ui.layout.fillMaxSize
 import androidx.ui.unit.Dp
 import androidx.ui.unit.dp
-import com.sudo.rizwan.composecalculator.Drag
+import com.sudo.rizwan.composecalculator.model.Drag
 
 @Composable
 fun Content(

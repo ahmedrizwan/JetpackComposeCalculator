@@ -8,7 +8,7 @@ import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.preferredHeight
 import androidx.ui.unit.Dp
 import com.sudo.rizwan.composecalculator.AppState
-import com.sudo.rizwan.composecalculator.Drag
+import com.sudo.rizwan.composecalculator.model.Drag
 
 @Composable()
 fun BottomView(
@@ -30,7 +30,7 @@ fun BottomView(
         backgroundColor = AppState.theme.background,
         gravity = ContentGravity.BottomStart
     ) {
-        Numbers(alpha = alphaForSideDrag)
+        NumbersPanel(alpha = alphaForSideDrag)
         SideView(
             boxHeight = boxHeight,
             drag = sideDrag
