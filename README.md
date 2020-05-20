@@ -1,6 +1,6 @@
-![alt text](https://github.com/ahmedrizwan/JetpackComposeCalculator/raw/master/screenshot.png)
-
 # JetpackComposeCalculator
+
+![alt text](https://github.com/ahmedrizwan/JetpackComposeCalculator/raw/master/screenshot.png)
 
 A jetpack compose clone of Android 10 Calculator UI
 
