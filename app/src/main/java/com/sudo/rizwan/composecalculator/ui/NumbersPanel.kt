@@ -15,6 +15,7 @@ import androidx.ui.text.font.fontFamily
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import com.sudo.rizwan.composecalculator.AppState
+import com.sudo.rizwan.composecalculator.AppState.inputText
 import com.sudo.rizwan.composecalculator.R
 import com.sudo.rizwan.composecalculator.performCalculation
 import com.sudo.rizwan.composecalculator.saveCalculationToHistory
@@ -59,8 +60,8 @@ fun MainContentButton(text: String) {
             performCalculation()
             saveCalculationToHistory()
         } else {
-            if (AppState.inputText.text.length < 10) {
-                AppState.inputText = TextFieldValue(text = AppState.inputText.text + text)
+            if (inputText.text.length < 10) {
+                inputText = TextFieldValue(text = inputText.text + text)
             }
 
             performCalculation()
@@ -84,9 +85,11 @@ fun OperationItem(text: String) {
         IconButton(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             onClick = {
-                AppState.inputText = TextFieldValue(
-                    text = AppState.inputText.text.substring(0, AppState.inputText.text.length - 1)
-                )
+                if (inputText.text.isNotEmpty()) {
+                    inputText = TextFieldValue(
+                        text = inputText.text.substring(0, inputText.text.length - 1)
+                    )
+                }
                 performCalculation()
             }) {
             Icon(
@@ -97,7 +100,7 @@ fun OperationItem(text: String) {
     } else {
         IconButton(modifier = Modifier.weight(1f).fillMaxWidth(), onClick = {
             AppState.outputText = TextFieldValue(text = "")
-            AppState.inputText = TextFieldValue(text = AppState.inputText.text + text)
+            inputText = TextFieldValue(text = inputText.text + text)
         }) {
             Box(gravity = ContentGravity.Center) {
                 Text(
