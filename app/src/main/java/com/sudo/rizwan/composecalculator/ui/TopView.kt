@@ -52,7 +52,6 @@ fun TopView(
                 onDragStopped = { position.fling(flingConfig, it) }
             ) { delta ->
                 position.snapTo(position.value + delta)
-                // consume all delta no matter the bounds to avoid nested dragging (as example)
                 delta
             }
             .preferredHeight(boxHeight),
@@ -68,7 +67,7 @@ fun TopView(
             HistoryTopBar()
             HistoryList(scrollerPosition)
             Spacer(modifier = Modifier.preferredHeight(2.dp))
-            CollapsableContent(boxHeight, position)
+            MainContent(boxHeight, position)
             RoundedDash()
         }
     }
@@ -159,7 +158,7 @@ private fun HistoryItem(item: Operation) {
 }
 
 @Composable
-private fun CollapsableContent(boxHeight: Dp, position: AnimatedFloat) {
+private fun MainContent(boxHeight: Dp, position: AnimatedFloat) {
     // Some scary maths
     val originalHeight = (boxHeight.value / 3.7)
     val div = abs(position.min / originalHeight)

@@ -32,10 +32,10 @@ fun SideView(
 ) {
     val position = drag.position
     val flingConfig = drag.flingConfig
-    val yOffset = with(DensityAmbient.current) { position.value.toDp() }
+    val xOffset = with(DensityAmbient.current) { position.value.toDp() }
     val toggleAsset = state { R.drawable.ic_keyboard_arrow_left_24 }
     Box(
-        Modifier.offset(x = yOffset, y = 0.dp)
+        Modifier.offset(x = xOffset, y = 0.dp)
             .fillMaxWidth()
             .draggable(
                 startDragImmediately = position.isRunning,
